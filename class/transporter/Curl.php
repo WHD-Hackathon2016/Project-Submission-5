@@ -16,7 +16,7 @@ class Curl extends \transporter\Transporter
 
 	public function request($url, $method, $options = array(), $headers = array())
 	{
-		$ch = curl_init();
+		$ch = \curl_init();
 
 		$options[CURLOPT_CUSTOMREQUEST] = strtoupper($method);
 
