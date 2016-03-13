@@ -10,7 +10,7 @@
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://cloudpanel-api.1and1.com/v1/ping_auth",
+    CURLOPT_URL => "https://cloudpanel-api.oneAndOne.com/v1/ping_auth",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_CUSTOMREQUEST => "GET",
     CURLOPT_HTTPHEADER => array(
