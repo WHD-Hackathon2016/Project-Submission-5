@@ -18,6 +18,11 @@ abstract class Element implements IElement
 		$this->data = $data;
 	}
 
+	/**
+	 * @param null $id
+	 * @return $this
+	 * @throws \Exception
+	 */
     public static function get($id = null)
     {
         $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);

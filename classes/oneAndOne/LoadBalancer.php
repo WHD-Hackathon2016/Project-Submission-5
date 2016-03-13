@@ -19,26 +19,29 @@ class LoadBalancer extends Element
 			// Loop all servers in the balancer
 			foreach ($this->data->server_ips as $server)
 			{
-				$serverclass = \oneAndOne\Server::get($server->id);
+                // we have the ip of the server, so we have to get the element to get the real id of the server
+                $serverIp = ServerIP::get($server->id);
+                $serverId = $serverIp->assigned_to->id;
+				$serverclass = \oneAndOne\Server::get($serverId);
 
 				// Check if we have to optimize the server
-				$newserver = $serverclass->optimize();
+				$newserverId = $serverclass->optimize();
 
 				// If we have a server object here, the optimize method cloned the server, so let's add it to the balancer
-				if ($newserver)
+				if ($newserverId)
 				{
-					$this->addServer($id, $newserver);
+					$this->addServer($newserverId);
 				}
 			}
 		}
 	}
 
-	public function addServer($loader_id, $serverId)
+	public function addServer($serverId)
 	{
 		// Load the IP
 
 
-		$servers = new \oneAndOne\LoadBalancer\ServerIPs($loader_id);
+		$servers = new \oneAndOne\LoadBalancer\ServerIPs($this->data->id);
 
 		$newserver = new \stdClass;
 		$newserver->server_ips = array($serverId);

@@ -14,25 +14,21 @@ class Server extends Element
 
     public function optimize()
     {
-		// $realServer = ServerIP::get($this->data->id);
-
-		$serverId = $this->data->id;
-
-        $monitoringId = $this->getMonitoringId($serverId);
-        $monitoring = (new MonitoringPolicy())->get($monitoringId);
-        //print_r($monitoring);
+		$monitoringId = $this->data->monitoring_policy->id;
+        $monitoring = MonitoringPolicy::get($monitoringId);
 
         // todo: we have to check if we must to clone the server
-        $newServer = $this->cloneServer($serverId);
+        $newServer = $this->cloneServer();
 
         // wait until the server has an ip
         $count = 0;
         $ip = null;
         do{
-            $result = parent::get($newServer->id)->content;
-            if(isset($result->ips[0]->id))
+            //$result = parent::get($newServer->id)->content;
+            $newServer = Server::get($newServer->id);
+            if(isset($newServer->ips[0]->id))
             {
-                $ip = $result->ips[0]->id;
+                $ip = $newServer->ips[0]->id;
             }
             ++$count;
             sleep(5);
@@ -46,32 +42,20 @@ class Server extends Element
  * @return mixed
  * @throws \Exception
  */
-    public function cloneServer($id)
+    public function cloneServer()
     {
+        print $this->data->status->state."\n";
+        //we check if serveris in correct status
+        if($this->data->status->state === 'POWERED_ON' || $this->data->status->state === 'POWERED_OFF'){
+            $url = \AppConfig::getData('API')['url'].$this->segment."/".$this->data->id."/clone";
+            $postParams = "{\"name\": \"Server Cloned at ".date('Y-m-d H:i:s')."\"}";
+            $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
 
-        $url = \AppConfig::getData('API')['url'].$this->segment."/".$id."/clone";
-        $postParams = "{\"name\": \"Server Cloned at ".date('Y-m-d H:i:s')."\"}";
-        $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
-
-        $result = $curl->post($url, $postParams);
-        return $result->content;
-    }
-
-    public function getMonitoringId($serverId)
-    {
-		$server = parent::get($serverId);
-
-        if (isset($server->content->monitoring_policy->id) )
-        {
-            return $server->content->monitoring_policy->id;
+            $result = $curl->post($url, $postParams);
+            return $result->content;
         }
 
-        throw new \Exception("Server is not monitored");
+        throw new \Exception("Can't clone the server in actual state");
+
     }
-
-
-
-
-
-
 }
