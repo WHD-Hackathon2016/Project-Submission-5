@@ -23,4 +23,19 @@ abstract class Element implements IElement
 
 		return $result;
 	}
+
+	public function post($url, $postparams)
+	{
+        $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
+        $result = $curl->post($url, $postparams);
+	}
+
+	public function __get($name)
+	{
+		switch ($name)
+		{
+			case 'id':
+				return $this->$name;
+		}
+	}
 }
