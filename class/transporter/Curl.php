@@ -20,6 +20,8 @@ class Curl extends \transporter\Transporter
 
 		$options[CURLOPT_CUSTOMREQUEST] = strtoupper($method);
 
+		$options[CURLOPT_URL] = (string) $url;
+
 		$headers['x-token'] = $this->xtoken;
 
 		$finishedHeaders = array();
@@ -30,14 +32,19 @@ class Curl extends \transporter\Transporter
 		}
 
 		$options[CURLOPT_HTTPHEADER] = $headers;
+		$options[CURLOPT_HEADER] = true;
+		$options[CURLOPT_RETURNTRANSFER] = true;
 
 		curl_setopt_array($ch, $options);
 
 		$content = curl_exec($ch);
 
+		$info = curl_getinfo($ch);
+
 		curl_close($ch);
 
-		print_r($content);
+		var_dump($content);
+		exit;
 
 	}
 }
