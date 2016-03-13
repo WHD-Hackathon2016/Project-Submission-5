@@ -13,10 +13,31 @@ class Server extends Element
 {
     protected $segment = "/servers";
 
+    public function optimize()
+    {
+        $monitoringId = $this->getMonitoringId();
+        $monitoring = (new MonitoringPolicy())->get($monitoringId);
+        print_r($monitoring);
+    }
+
     public function cloneServer()
     {
 
     }
+
+    public function getMonitoringId()
+    {
+        if (isset($this->content->monitoring_policy->id) )
+        {
+            return $this->content->monitoring_policy->id;
+        }
+
+        throw new \Exception("Server is not monitored");
+    }
+
+
+
+
 
 
 }
