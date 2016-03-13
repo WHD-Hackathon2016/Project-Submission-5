@@ -16,11 +16,13 @@ class LoadBalancer extends Element
 	{
 		$result = parent::get($id);
 
-		if (isset($result['server_ips']) && is_array($result['server_ips']))
+		if (isset($result->content->server_ips) && is_array($result->content->server_ips))
 		{
-			foreach ($result['server_ips'] as $server)
+			$server = oneAndOne\Server;
+
+			foreach ($result->content->server_ips as $server)
 			{
-				print_r($server);
+				$server->optimize($server->id);
 			}
 		}
 	}
