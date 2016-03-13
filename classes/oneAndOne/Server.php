@@ -19,12 +19,26 @@ class Server extends Element
 
         $monitoringId = $this->getMonitoringId($serverId);
         $monitoring = (new MonitoringPolicy())->get($monitoringId);
-        print_r($monitoring);
+        //print_r($monitoring);
+
+        // todo: we have to check if we must to clone the server
+        $newServer = $this->cloneServer($serverId);
+        return $newServer->id;
     }
 
-    public function cloneServer()
+    /**
+     * @param $id
+     * @return \response\JSON
+     * @throws \Exception
+     */
+    public function cloneServer($id)
     {
+        $url = \AppConfig::getData('API')['url'].$this->segment."/".$id."/clone";
+        $postParams = "{\"name\": \"Server Cloned at ".date('Y-m-d H:i:s')."\"}";
+        $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
 
+        $result = $curl->post($url, $postParams);
+        return $result;
     }
 
     public function getMonitoringId($serverId)
