@@ -7,7 +7,7 @@
 
 namespace transporter;
 
-abstract class Transporter implements \transporter\AppInterface
+abstract class Transporter implements \transporter\Transporterinterface
 {
 	protected $xtoken;
 
