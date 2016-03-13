@@ -8,14 +8,15 @@
 
 namespace oneAndOne;
 
-
 class Server extends Element
 {
-    protected $segment = "/servers";
+    static $segment = "/servers";
 
-    public function optimize($ipId)
+    public function optimize()
     {
-        $serverId = (new ServerIP())->getServerId($ipId);
+		// $realServer = ServerIP::get($this->data->id);
+
+		$serverId = $this->data->id;
 
         $monitoringId = $this->getMonitoringId($serverId);
         $monitoring = (new MonitoringPolicy())->get($monitoringId);

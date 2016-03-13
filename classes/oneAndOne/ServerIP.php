@@ -11,7 +11,7 @@ namespace oneAndOne;
 
 class ServerIP extends Element
 {
-    protected $segment = "/public_ips";
+    static $segment = "/public_ips";
 
     public function getServerId($ipId)
     {

@@ -12,19 +12,17 @@ class LoadBalancer extends Element
 {
     static $segment = "/load_balancers";
 
-	public function checkLoad($id)
+	public function checkLoad()
 	{
-		$result = parent::get($id);
-
-		if (isset($result->content->server_ips) && is_array($result->content->server_ips))
+		if (isset($this->data->server_ips) && is_array($this->data->server_ips))
 		{
-			$serverclass = new \oneAndOne\Server;
-
 			// Loop all servers in the balancer
-			foreach ($result->content->server_ips as $server)
+			foreach ($this->data->server_ips as $server)
 			{
+				$serverclass = \oneAndOne\Server::get($server->id);
+
 				// Check if we have to optimize the server
-				$newserver = $serverclass->optimize($server->id);
+				$newserver = $serverclass->optimize();
 
 				// If we have a server object here, the optimize method cloned the server, so let's add it to the balancer
 				if ($newserver)

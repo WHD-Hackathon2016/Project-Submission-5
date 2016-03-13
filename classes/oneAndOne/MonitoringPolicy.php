@@ -18,5 +18,5 @@ class MonitoringPolicy extends \oneAndOne\Element
 	private $warningRam;
 	private $warningDisk;
 
-	protected $segment = '/monitoring_policies';
+	static $segment = '/monitoring_policies';
 }

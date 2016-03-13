@@ -37,5 +37,12 @@ foreach ($parameters as $param)
 	}
 }
 
-$loadbalancer = new \oneAndOne\LoadBalancer();
-$loadbalancer->checkLoad($params['loader']);
+if (!isset($params['loader']))
+{
+	echo 'No loader given';
+
+	return;
+}
+
+$loadbalancer = \oneAndOne\LoadBalancer::get($params['loader']);
+$loadbalancer->checkLoad();
