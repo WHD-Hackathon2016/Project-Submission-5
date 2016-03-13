@@ -23,7 +23,21 @@ class Server extends Element
 
         // todo: we have to check if we must to clone the server
         $newServer = $this->cloneServer($serverId);
-        return $newServer->ips[0]->id;
+
+        // wait until the server has an ip
+        $count = 0;
+        $ip = null;
+        do{
+            $result = parent::get($newServer->id)->content;
+            if(isset($result->ips[0]->id))
+            {
+                $ip = $result->ips[0]->id;
+            }
+            ++$count;
+            sleep(5);
+        }while (is_null($ip) && $count < 20);
+
+        return $ip;
     }
 
     /**
