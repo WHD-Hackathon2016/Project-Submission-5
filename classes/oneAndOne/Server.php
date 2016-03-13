@@ -27,18 +27,19 @@ class Server extends Element
     }
 
     /**
-     * @param $id
-     * @return \response\JSON
-     * @throws \Exception
-     */
+ * @param $id
+ * @return mixed
+ * @throws \Exception
+ */
     public function cloneServer($id)
     {
+
         $url = \AppConfig::getData('API')['url'].$this->segment."/".$id."/clone";
         $postParams = "{\"name\": \"Server Cloned at ".date('Y-m-d H:i:s')."\"}";
         $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
 
         $result = $curl->post($url, $postParams);
-        return $result;
+        return $result->content;
     }
 
     public function getMonitoringId($serverId)
