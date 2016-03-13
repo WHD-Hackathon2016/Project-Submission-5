@@ -7,5 +7,5 @@
  */
 
 spl_autoload_register(function ($class) {
-    include 'class/' . $class . '.php';
+    include 'classes/' . $class . '.php';
 });

@@ -2,8 +2,20 @@
 
 namespace transporter;
 
+use classes\AppConfig;
+use response\Json;
+
 class Curl extends \transporter\Transporter
 {
+	protected $certificate;
+
+	public function __construct($xtoken = null)
+	{
+		parent::__construct($xtoken);
+
+		$this->certificate = BASE_DIR . '/config/cacert.pem';
+	}
+
 	public function get($url)
 	{
 		return $this->request($url, 'GET');
@@ -28,23 +40,25 @@ class Curl extends \transporter\Transporter
 
 		foreach ($headers as $key => $header)
 		{
-			$finishedHeaders[] = $key . ':' . $header;
+			$finishedHeaders[] = $key . ': ' . $header;
 		}
 
-		$options[CURLOPT_HTTPHEADER] = $headers;
-		$options[CURLOPT_HEADER] = true;
+		$options[CURLOPT_HTTPHEADER] = $finishedHeaders;
 		$options[CURLOPT_RETURNTRANSFER] = true;
+
+		if (false && $this->certificate)
+		{
+			$options[CURLOPT_CAINFO] = $this->certificate;
+		}
+		else
+		{
+			$options[CURLOPT_SSL_VERIFYPEER] = false;
+		}
 
 		curl_setopt_array($ch, $options);
 
 		$content = curl_exec($ch);
 
-		$info = curl_getinfo($ch);
-
-		curl_close($ch);
-
-		var_dump($content);
-		exit;
-
+		return new \response\JSON($content);
 	}
 }
