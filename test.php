@@ -8,5 +8,5 @@
 
 include_once 'autoload.php';
 
-AppConfig::readFile();
-print_r(AppConfig::getData('API'));
+$postParams= "{\"name\": \"Server Cloned at ".date('Y-m-d H:i:s')."\"}";
+print $postParams;

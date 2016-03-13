@@ -49,7 +49,7 @@ class Curl extends \transporter\Transporter
 
 			if (!isset($headers['Content-Type']))
 			{
-				$headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
+				$headers['Content-Type'] = 'application/json';
 			}
 
 			// Add the relevant headers.

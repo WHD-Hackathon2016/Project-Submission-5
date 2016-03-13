@@ -11,5 +11,12 @@ namespace oneAndOne;
 
 class MonitoringPolicy extends \oneAndOne\Element
 {
+	private $criticalCpu;
+	private $criticalRam;
+	private $criticalDisk;
+	private $warningCpu;
+	private $warningRam;
+	private $warningDisk;
+
 	protected $segment = '/monitoring_policies';
 }

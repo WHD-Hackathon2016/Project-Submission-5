@@ -8,5 +8,5 @@ interface ITransporter
 
 	public function get($url);
 
-	public function post($url);
+	public function post($url,$data);
 }
