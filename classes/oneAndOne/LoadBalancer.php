@@ -37,6 +37,9 @@ class LoadBalancer extends Element
 
 	public function addServer($loader_id, $serverId)
 	{
+		// Load the IP
+		
+
 		$servers = new \oneAndOne\LoadBalancer\ServerIPs($loader_id);
 
 		$newserver = new \stdClass;

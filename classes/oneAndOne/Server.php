@@ -23,7 +23,8 @@ class Server extends Element
 
         // todo: we have to check if we must to clone the server
         $newServer = $this->cloneServer($serverId);
-        return $newServer->ips[0]->id;
+
+        return $newServer->id;
     }
 
     /**
