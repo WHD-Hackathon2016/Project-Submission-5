@@ -1,6 +1,8 @@
 <?php
 
-interface AppTransporterInterface
+namespace transporter;
+
+interface AppInterface
 {
 	public function __construct($credentials = null);
 
