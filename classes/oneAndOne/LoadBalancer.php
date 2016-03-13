@@ -27,10 +27,10 @@ class LoadBalancer extends Element
 				$newserver = $serverclass->optimize($server->id);
 
 				// If we have a server object here, the optimize method cloned the server, so let's add it to the balancer
-//				if ($newserver instanceof \oneAndOne\Server)
-//				{
-//					$this->addServer($newserver);
-//				}
+				if ($newserver instanceof \oneAndOne\Server)
+				{
+					$this->addServer($newserver);
+				}
 			}
 		}
 	}
@@ -39,6 +39,6 @@ class LoadBalancer extends Element
 	{
 		$servers = new \oneAndOne\LoadBalancer\ServerIPs;
 
-		$servers->add($server->id);
+		$result = $servers->post(array('server_ips' => $server->id));
     }
 }
