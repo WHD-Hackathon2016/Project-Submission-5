@@ -38,16 +38,11 @@ class LoadBalancer extends Element
 
 	public function addServer($serverId)
 	{
-		// Load the IP
-
-
-		$servers = new \oneAndOne\LoadBalancer\ServerIPs($this->data->id);
-
 		$newserver = new \stdClass;
 		$newserver->server_ips = array($serverId);
 
-		$result = $servers->post(json_encode($newserver));
-
-		print_r($result);
+        $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
+        $url= \AppConfig::getData('API')['url']. '/load_balancers/' . $this->data->id . '/server_ips';
+        $result = $curl->post($url, json_encode($newserver));
     }
 }
