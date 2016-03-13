@@ -1,6 +1,6 @@
 <?php
 
-interface Transporter
+interface AppTransporterInterface
 {
 	public function __construct($credentials = null);
 
