@@ -18,13 +18,13 @@ class LoadBalancer extends Element
 
 		if (isset($result->content->server_ips) && is_array($result->content->server_ips))
 		{
-			$server = oneAndOne\Server;
+			$serverclass = new \oneAndOne\Server;
 
 			// Loop all servers in the balancer
 			foreach ($result->content->server_ips as $server)
 			{
 				// Check if we have to optimize the server
-				$newserver = $server->optimize($server->id);
+				$newserver = $serverclass->optimize($server->id);
 
 				// If we have a server object here, the optimize method cloned the server, so let's add it to the balancer
 				if ($newserver instanceof \oneAndOne\Server)
@@ -35,8 +35,10 @@ class LoadBalancer extends Element
 		}
 	}
 
-	public function addServer($idServer)
+	public function addServer(\oneAndOne\Server $server)
 	{
-		
+		$servers = new \oneAndOne\LoadBalancer\ServerIPs;
+
+		$servers->add($server->id);
     }
 }
