@@ -47,7 +47,7 @@ class Server extends Element
         print $this->data->status->state."\n";
         //we check if serveris in correct status
         if($this->data->status->state === 'POWERED_ON' || $this->data->status->state === 'POWERED_OFF'){
-            $url = \AppConfig::getData('API')['url'].$this->segment."/".$this->data->id."/clone";
+            $url = \AppConfig::getData('API')['url'].static::$segment."/".$this->data->id."/clone";
             $postParams = "{\"name\": \"Server Cloned at ".date('Y-m-d H:i:s')."\"}";
             $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
 
