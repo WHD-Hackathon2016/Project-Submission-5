@@ -29,7 +29,7 @@ $params = array();
 
 foreach ($parameters as $param)
 {
-	$temp = explode('=');
+	$temp = explode('=', $param);
 
 	if (isset($temp[0]) && isset($temp[1]))
 	{
@@ -37,6 +37,7 @@ foreach ($parameters as $param)
 	}
 }
 
-$loadbalancer = new \oneAndOne\LoadBalancer($params['loader']);
+$loadbalancer = new \oneAndOne\LoadBalancer();
+$loadbalancer->get($params['loader']);
 
 print_r($loadbalancer);

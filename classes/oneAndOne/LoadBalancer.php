@@ -8,7 +8,9 @@ namespace oneAndOne;
  * Date: 13/03/2016
  * Time: 13:52
  */
-class LoadBalancer extends Element implements IElement
+class LoadBalancer extends Element
 {
+    protected $segment = "/load_balancer";
+
 
 }

@@ -11,5 +11,6 @@ namespace oneAndOne;
 
 interface IElement
 {
+    public function get($id);
 
 }
