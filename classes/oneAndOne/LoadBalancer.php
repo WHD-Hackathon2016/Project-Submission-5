@@ -18,7 +18,7 @@ class LoadBalancer extends Element
 
 		if (isset($result->content->server_ips) && is_array($result->content->server_ips))
 		{
-			$server = oneAndOne\Server;
+			$server = new \oneAndOne\Server();
 
 			// Loop all servers in the balancer
 			foreach ($result->content->server_ips as $server)

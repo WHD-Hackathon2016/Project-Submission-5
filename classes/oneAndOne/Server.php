@@ -13,9 +13,13 @@ class Server extends Element
 {
     protected $segment = "/servers";
 
-    public function optimize()
+    public function optimize($ipId)
     {
-        $monitoringId = $this->getMonitoringId();
+        $ip = (new ServerIP())->get($ipId);
+        $serverId = $ip->getServerId();
+
+        $server = parent::get($serverId);
+        $monitoringId = $server->getMonitoringId();
         $monitoring = (new MonitoringPolicy())->get($monitoringId);
         print_r($monitoring);
     }
