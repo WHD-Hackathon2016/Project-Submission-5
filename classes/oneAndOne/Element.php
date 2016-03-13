@@ -9,20 +9,46 @@ namespace oneAndOne;
  */
 abstract class Element implements IElement
 {
-    protected $id;
-    protected $name;
-    protected $date;
-	protected $status;
+	protected $data;
 
-    protected $segment;
+    static $segment;
 
-    public function get($id)
+	public function __construct($data)
+	{
+		$this->data = $data;
+	}
+
+    public static function get($id = null)
     {
         $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
-        $url= \AppConfig::getData('API')['url'].$this->segment.'/'.$id;
+        $url= \AppConfig::getData('API')['url']. static::$segment.'/'.$id;
         $result = $curl->get($url);
 
-		return $result;
+		return static::createObject($result);
+	}
+
+	protected static function createObject($result)
+	{
+		// @TODO: check if $result is valid
+		$content = $result->content;
+
+		$return = null;
+
+		if (is_array($content))
+		{
+			$return = array();
+
+			foreach ($content as $data)
+			{
+				$return[] = new static($data);
+			}
+		}
+		else
+		{
+			$return = new static($content);
+		}
+
+		return $return;
 	}
 
 	public function post($postparams)
@@ -36,10 +62,11 @@ abstract class Element implements IElement
 
 	public function __get($name)
 	{
-		switch ($name)
+		if (isset($this->data->$name))
 		{
-			case 'id':
-				return $this->$name;
+			return $this->data->$name;
 		}
+
+		return null;
 	}
 }
