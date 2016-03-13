@@ -12,6 +12,7 @@ abstract class Element implements IElement
     protected $id;
     protected $name;
     protected $date;
+	protected $status;
 
     protected $segment;
 
