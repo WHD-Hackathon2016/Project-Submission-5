@@ -12,5 +12,8 @@ class LoadBalancer extends Element
 {
     protected $segment = "/load_balancer";
 
+    public function addServer($idServer)
+    {
 
+    }
 }
