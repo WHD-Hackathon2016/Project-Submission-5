@@ -25,10 +25,10 @@ class Server extends Element
         $ip = null;
         do{
             //$result = parent::get($newServer->id)->content;
-            $newServer = Server::get($newServer->id);
-            if(isset($newServer->ips[0]->id))
+            $server = Server::get($newServer->id);
+            if(isset($server->ips[0]->id))
             {
-                $ip = $newServer->ips[0]->id;
+                $ip = $server->ips[0]->id;
             }
             ++$count;
             sleep(5);
@@ -52,7 +52,8 @@ class Server extends Element
             $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
 
             $result = $curl->post($url, $postParams);
-            return $result->content;
+
+			return $this->createObject($result);
         }
 
         throw new \Exception("Can't clone the server in actual state");

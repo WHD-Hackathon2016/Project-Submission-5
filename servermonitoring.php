@@ -44,5 +44,10 @@ if (!isset($params['loader']))
 	return;
 }
 
-$loadbalancer = \oneAndOne\LoadBalancer::get($params['loader']);
-$loadbalancer->checkLoad();
+try {
+	$loadbalancer = \oneAndOne\LoadBalancer::get($params['loader']);
+	$loadbalancer->checkLoad();
+
+} catch (Exception $ex) {
+	echo 'A wild error appears: ' . $ex->getMessage();
+}
