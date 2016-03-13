@@ -38,6 +38,4 @@ foreach ($parameters as $param)
 }
 
 $loadbalancer = new \oneAndOne\LoadBalancer();
-$loadbalancer->get($params['loader']);
-
-print_r($loadbalancer);
+$loadbalancer->checkLoad($params['loader']);

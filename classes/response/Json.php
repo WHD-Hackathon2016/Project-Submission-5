@@ -4,24 +4,24 @@ namespace response;
 
 class JSON
 {
-	protected $object;
+	protected $content;
 
 	public function __construct($content)
 	{
-		$this->object = json_decode($content);
+		$this->content = json_decode($content);
 	}
 
 	public function isValid()
 	{
-		return (bool) $this->object;
+		return (bool) $this->content;
 	}
 
 	public function __get($name)
 	{
 		switch ($name)
 		{
-			case 'object':
-				return $this->object;
+			case 'content':
+				return $this->content;
 		}
 	}
 }
