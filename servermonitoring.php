@@ -25,11 +25,18 @@ $parameters = $argv;
 // Remove the file path
 array_shift($parameters);
 
+$params = array();
 
-print_r($parameters);exit;
+foreach ($parameters as $param)
+{
+	$temp = explode('=');
 
-$curl = new \transporter\Curl(AppConfig::getData('API')['token']);
-$url= AppConfig::getData('API')['url'].'/servers';
-$result = $curl->get($url);
+	if (isset($temp[0]) && isset($temp[1]))
+	{
+		$params[$temp[0]] = $temp[1];
+	}
+}
 
+$loadbalancer = new \oneAndOne\LoadBalancer($params['loader']);
 
+print_r($loadbalancer);

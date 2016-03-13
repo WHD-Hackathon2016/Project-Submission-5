@@ -2,7 +2,7 @@
 
 namespace transporter;
 
-interface Transporterinterface
+interface ITransporter
 {
 	public function __construct($credentials = null);
 
