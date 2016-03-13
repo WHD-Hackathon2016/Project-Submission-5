@@ -15,11 +15,9 @@ class Server extends Element
 
     public function optimize($ipId)
     {
-        $ip = (new ServerIP())->get($ipId);
-        $serverId = $ip->getServerId();
+        $serverId = (new ServerIP())->getServerId($ipId);
 
-        $server = parent::get($serverId);
-        $monitoringId = $server->getMonitoringId();
+        $monitoringId = $this->getMonitoringId($serverId);
         $monitoring = (new MonitoringPolicy())->get($monitoringId);
         print_r($monitoring);
     }
@@ -29,11 +27,13 @@ class Server extends Element
 
     }
 
-    public function getMonitoringId()
+    public function getMonitoringId($serverId)
     {
-        if (isset($this->content->monitoring_policy->id) )
+		$server = parent::get($serverId);
+
+        if (isset($server->content->monitoring_policy->id) )
         {
-            return $this->content->monitoring_policy->id;
+            return $server->content->monitoring_policy->id;
         }
 
         throw new \Exception("Server is not monitored");

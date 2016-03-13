@@ -13,11 +13,13 @@ class ServerIP extends Element
 {
     protected $segment = "/public_ips";
 
-    public function getServerId()
+    public function getServerId($ipId)
     {
-        if (isset($this->content->assigned_to->id) )
+		$ip = parent::get($ipId);
+
+        if (isset($ip->content->assigned_to->id) )
         {
-            return $this->content->assigned_to->id;
+            return $ip->content->assigned_to->id;
         }
 
         throw new \Exception("Ip has not server assigned");

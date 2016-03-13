@@ -9,7 +9,7 @@
 namespace oneAndOne;
 
 
-class MonitoringPolicy extends Element
+class MonitoringPolicy extends \oneAndOne\Element
 {
-
+	protected $segment = '/monitoring_policies';
 }
