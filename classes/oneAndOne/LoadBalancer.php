@@ -29,16 +29,24 @@ class LoadBalancer extends Element
 				// If we have a server object here, the optimize method cloned the server, so let's add it to the balancer
 				if ($newserver)
 				{
-					$this->addServer($newserver);
+					$this->addServer($id, $newserver);
 				}
 			}
 		}
 	}
 
-	public function addServer($serverId)
+	public function addServer($loader_id, $serverId)
 	{
-		$servers = new \oneAndOne\LoadBalancer\ServerIPs;
+		// Load the IP
+		
 
-		$result = $servers->post(array('server_ips' => array($serverId)));
+		$servers = new \oneAndOne\LoadBalancer\ServerIPs($loader_id);
+
+		$newserver = new \stdClass;
+		$newserver->server_ips = array($serverId);
+
+		$result = $servers->post(json_encode($newserver));
+
+		print_r($result);
     }
 }

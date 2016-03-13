@@ -22,7 +22,7 @@ class Curl extends \transporter\Transporter
 	}
 
 	public function post($url, $data)
-	{
+	{;
 		return $this->request($url, 'POST', $data);
 	}
 
@@ -81,8 +81,15 @@ class Curl extends \transporter\Transporter
 		}
 
 		curl_setopt_array($ch, $options);
-
+echo 'Called: ' . $url . "\n";
 		$content = curl_exec($ch);
+
+		if ($content == false)
+		{
+			$errors = curl_error($ch);
+
+			print_r($errors);
+		}
 
 		return new \response\JSON($content);
 	}

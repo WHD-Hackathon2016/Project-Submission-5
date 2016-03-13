@@ -28,8 +28,10 @@ abstract class Element implements IElement
 	public function post($postparams)
 	{
         $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
-        $url= \AppConfig::getData('API')['url'].$this->segment.'/';
+        $url= \AppConfig::getData('API')['url'].$this->segment;
         $result = $curl->post($url, $postparams);
+
+		return $result;
 	}
 
 	public function __get($name)
