@@ -16,6 +16,10 @@ class AppConfig
 
     public static function getData($data)
     {
+        if(empty(self::$data))
+        {
+            self::readFile();
+        }
         if(array_key_exists($data,self::$data)){
             return self::$data[$data];
         }
