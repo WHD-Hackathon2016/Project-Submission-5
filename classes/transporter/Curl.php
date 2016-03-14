@@ -65,16 +65,16 @@ class Curl extends \transporter\Transporter
 				$options[CURLOPT_POSTFIELDS] = http_build_query($data);
 			}
 
-			if (!isset($headers['Content-Type']))
-			{
-				$headers['Content-Type'] = 'application/json';
-			}
-
 			// Add the relevant headers.
 			if (is_scalar($options[CURLOPT_POSTFIELDS]))
 			{
 				$headers['Content-Length'] = strlen($options[CURLOPT_POSTFIELDS]);
 			}
+		}
+
+		if (!isset($headers['Content-Type']))
+		{
+			$headers['Content-Type'] = 'application/json';
 		}
 
 		$headers['x-token'] = $this->xtoken;
