@@ -35,6 +35,7 @@ class MonitoringCenter extends Element
      * @param $limit
      * @param $resource
      * @return bool
+     * @throws \Exception
      */
     public function checkReach($limit, $resource)
     {
@@ -65,17 +66,17 @@ class MonitoringCenter extends Element
             throw new \Exception("Resource not found");
         }
 
-        $inactive = true;
+        $inactive = false;
         foreach ($this->getLastValues($data) as $value)
 		{
             if($value->used_percent < $limit)
             {
                 // echo $resource ." limit reached at " . $value->date."\n";
-                $reach = false;
+                $inactive = true;
             }
         }
 
-        return $reach;
+        return $inactive;
 	}
 
     public function getLastValues($dataArray)

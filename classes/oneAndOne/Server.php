@@ -57,6 +57,39 @@ class Server extends Element
         return false;
     }
 
+    public function checkLowerLimits()
+    {
+        $monitoringId = $this->data->monitoring_policy->id;
+        $monitoring = MonitoringPolicy::get($monitoringId);
+        $cpuWarning = $monitoring->thresholds->cpu->warning->value;
+        $ramWaning = $monitoring->thresholds->ram->warning->value;
+
+        $monitoringCenter = MonitoringCenter::get($this->data->id);
+
+        //at the moment we only check critical ram and cpu
+        $resources = array(
+            'ram' => $cpuWarning,
+            'cpu' => $ramWaning);
+
+        $result = false;
+
+        foreach ($resources as $resource => $limit)
+        {
+            echo "Checking ".$resource." of " . $this->data->name . "\n";
+            $result = $monitoringCenter->checkInactive($limit / 2, $resource);
+
+            if (!$result)
+            {
+                break;
+            }
+        }
+        if($result)
+        {
+            "Server is working fine!!\n\n";
+        }
+        return $result;
+    }
+
     /**
  * @param $id
  * @return mixed
@@ -96,19 +129,13 @@ class Server extends Element
 
     public function checkThresholds($thresholds)
     {
-        $cpuWarning = $thresholds->cpu->warning->value;
         $cpuCritical = $thresholds->cpu->critical->value;
-        $ramWarning = $thresholds->ram->warning->value;
         $ramCritical = $thresholds->ram->critical->value;
-        $diskWarning = $thresholds->disk->warning->value;
-        $diskCritical = $thresholds->disk->critical->value;
+        //$diskCritical = $thresholds->disk->critical->value; //only works with agent installed
 
         /*print_r(array(
-            $cpuWarning,
             $cpuCritical,
-            $ramWarning,
             $ramCritical,
-            $diskWarning,
             $diskCritical,
         ));*/
 

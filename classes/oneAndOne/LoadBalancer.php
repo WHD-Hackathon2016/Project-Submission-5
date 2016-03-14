@@ -80,7 +80,7 @@ class LoadBalancer extends Element
 				{
 					echo "The server state is OK, now check if the server is deletable\n";
 
-					// @TODO check lower limits
+					$canDelete = $serverclass->checkLowerLimits();
 				}
 			}
 
