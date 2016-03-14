@@ -71,7 +71,7 @@ class Curl extends \transporter\Transporter
 		$options[CURLOPT_HTTPHEADER] = $finishedHeaders;
 		$options[CURLOPT_RETURNTRANSFER] = true;
 
-		if (false && $this->certificate)
+		if ($this->certificate)
 		{
 			$options[CURLOPT_CAINFO] = $this->certificate;
 		}

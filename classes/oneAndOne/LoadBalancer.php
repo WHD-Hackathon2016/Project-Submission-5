@@ -29,7 +29,9 @@ class LoadBalancer extends Element
 			echo "Good Evening,\n";
 		}
 
-		echo "Let's search for existing servers...\n";
+		echo "I found the following load balancer: $this->name\n";
+
+		echo "Now I search for existing servers...\n";
 
 		if (isset($this->data->server_ips) && is_array($this->data->server_ips))
 		{
@@ -42,7 +44,7 @@ class LoadBalancer extends Element
 				$serverclass = \oneAndOne\Server::get($serverId);
 
 				echo "I found the following server: " . $serverclass->name . "\n";
-				echo "Let's optimize it!\n";
+				echo "I try to optimize it!\n";
 
 				// Check if we have to optimize the server
 				$newserverId = $serverclass->optimize();
@@ -50,13 +52,19 @@ class LoadBalancer extends Element
 				// If we have a server object here, the optimize method cloned the server, so let's add it to the balancer
 				if ($newserverId)
 				{
+					echo "Try to add the new server to the current load balancer\n";
+
 					$this->addServer($newserverId);
+				}
+				else
+				{
+					echo "The server state is OK, continue\n";
 				}
 			}
 		}
 		else
 		{
-			echo "No servers found, we're finished";
+			echo "No servers found!\n";
 		}
 	}
 
