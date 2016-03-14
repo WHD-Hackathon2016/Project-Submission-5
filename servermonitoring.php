@@ -4,9 +4,13 @@
  *
  * @author     Francisco Aramayo Martinez <faramayo@arsys.es>
  * @author     Benjamin Trenkle <benjamin.trenkle@wicked-software.de>
- * 
+ *
  * @license    GNU General Public License version 3 or later; see LICENSE
  */
+
+// @TODOS:
+// 1. Add an error handling for each API call
+// 2. Make clean error messages
 
 // Make sure we're being called from the command line, not a web interface
 if (array_key_exists('REQUEST_METHOD', $_SERVER)) die;
