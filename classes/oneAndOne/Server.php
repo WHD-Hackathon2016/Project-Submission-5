@@ -17,8 +17,11 @@ class Server extends Element
 		$monitoringId = $this->data->monitoring_policy->id;
         $monitoring = MonitoringPolicy::get($monitoringId);
 
+        $this->checkThresholds($monitoring->thresholds);
+
         // todo: we have to check if we must to clone the server
         $newServer = $this->cloneServer();
+
 
         // wait until the server has an ip
         $count = 0;
@@ -56,7 +59,9 @@ class Server extends Element
  */
     public function cloneServer()
     {
-        print $this->data->status->state."\n";
+
+        throw new \Exception("Can't clone the server in actual state");
+        exit;
         //we check if serveris in correct status
         if($this->data->status->state === 'POWERED_ON' || $this->data->status->state === 'POWERED_OFF'){
             $url = \AppConfig::getData('API')['url'].static::$segment."/".$this->data->id."/clone";
@@ -70,5 +75,24 @@ class Server extends Element
 
         throw new \Exception("Can't clone the server in actual state");
 
+    }
+
+    public function checkThresholds($thresholds)
+    {
+        $cpuWarning = $thresholds->cpu->warning->value;
+        $cpuCritical = $thresholds->cpu->critical->value;
+        $ramWarning = $thresholds->ram->warning->value;
+        $ramCritical = $thresholds->ram->critical->value;
+        $diskWarning = $thresholds->disk->warning->value;
+        $diskCritical = $thresholds->disk->critical->value;
+
+        print_r(array(
+            $cpuWarning,
+            $cpuCritical,
+            $ramWarning,
+            $ramCritical,
+            $diskWarning,
+            $diskCritical,
+        ));
     }
 }
