@@ -56,11 +56,13 @@ class LoadBalancer extends Element
 
 					$this->addServer($newserverId);
 
-					echo "Server added. continue\n";
+					echo "Server added\n";
+
+					return true;
 				}
 				else
 				{
-					echo "The server state is OK, continue\n";
+					echo "The server state is OK, now check if the server is deletable\n";
 				}
 			}
 		}
@@ -68,6 +70,8 @@ class LoadBalancer extends Element
 		{
 			echo "No servers found!\n";
 		}
+
+		return false;
 	}
 
 	public function addServer($serverId)

@@ -51,7 +51,41 @@ try {
 		throw new Exception('Invalid load balancer given');
 	}
 
-	$loadbalancer->checkLoad();
+	$date = new DateTime;
+
+	$filename = BASE_DIR . '/logs/' . $params['loader'];
+
+	$canClone = true;
+
+	if (file_exists($filename))
+	{
+		$content = file_get_contents($filename);
+
+		$last_clone = date_create_from_format('Y-m-d H:i:s', $content);
+
+		if ($last_clone)
+		{
+			$diff = $last_clone->diff($date);
+
+			$canClone = (int) $diff->format('s') > 360;
+		}
+	}
+
+	$iscloned = false;
+
+	if ($canClone)
+	{
+			$iscloned = $loadbalancer->checkLoad();
+	}
+	else
+	{
+		echo "I already cloned within the last 6 minutes...Nothing to do\n";
+	}
+
+	if ($iscloned)
+	{
+		file_put_contents($filename, $date->format('Y-m-d H:i:s'));
+	}
 
 	echo 'Closing...';
 

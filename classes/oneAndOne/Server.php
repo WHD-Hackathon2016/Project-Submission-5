@@ -17,15 +17,19 @@ class Server extends Element
 		$monitoringId = $this->data->monitoring_policy->id;
         $monitoring = MonitoringPolicy::get($monitoringId);
 
-        if ($this->checkThresholds($monitoring->thresholds)) {
-
-
+        if ($this->checkThresholds($monitoring->thresholds))
+		{
             // todo: we have to check if we must to clone the server
             $newServer = $this->cloneServer();
 
             // wait until the server has an ip
             $count = 0;
             $ip = null;
+
+			if (!$newServer)
+			{
+				return false;
+			}
 
             echo 'Waiting for the correct IP';
 
@@ -75,7 +79,7 @@ class Server extends Element
 			echo "Can't clone the server in actual state\n";
 		}
 
-
+		return false;
     }
 
     public function checkThresholds($thresholds)
