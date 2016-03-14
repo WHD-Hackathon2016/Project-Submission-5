@@ -56,6 +56,8 @@ try {
 		throw new Exception('No load balancer given');
 	}
 
+	define('DEBUG', !empty($params['debug']) ? 1 : 0);
+
 	$loadbalancer = \oneAndOne\LoadBalancer::get($params['loader']);
 
 	if (!$loadbalancer->id)
