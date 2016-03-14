@@ -35,6 +35,10 @@ class LoadBalancer extends Element
 
 		if (isset($this->data->server_ips) && is_array($this->data->server_ips))
 		{
+			$canDelete = true;
+
+			$isCloned = false;
+
 			// Loop all servers in the balancer
 			foreach ($this->data->server_ips as $server)
 			{
@@ -58,12 +62,22 @@ class LoadBalancer extends Element
 
 					echo "Server added\n";
 
-					return true;
+					$canDelete = false;
+					$isCloned = true;
+
+					break;
 				}
 				else
 				{
 					echo "The server state is OK, now check if the server is deletable\n";
+
+					// @TODO check lower limits
 				}
+			}
+
+			if ($canDelete)
+			{
+				// Delete a server
 			}
 		}
 		else
@@ -71,7 +85,7 @@ class LoadBalancer extends Element
 			echo "No servers found!\n";
 		}
 
-		return false;
+		return $isCloned;
 	}
 
 	public function addServer($serverId)
