@@ -80,9 +80,11 @@ class LoadBalancer extends Element
 				{
 					echo "The server state is OK, now check if the server is deletable\n";
 
-					$canDelete = $canDelete && $serverclass->checkLowerLimits();
+					$isDeletable = $serverclass->checkLowerLimits();
 
-					if ($canDelete)
+					$canDelete = $canDelete && $isDeletable;
+
+					if ($isDeletable)
 					{
 						echo "Ok, potential deletable\n";
 					}
