@@ -21,9 +21,14 @@ class Curl extends \transporter\Transporter
 		return $this->request($url, 'GET');
 	}
 
-	public function post($url, $data)
-	{;
+	public function post($url, $data = null)
+	{
 		return $this->request($url, 'POST', $data);
+	}
+
+	public function delete($url, $data = null)
+	{
+		return $this->request($url, 'DELETE', $data);
 	}
 
 	public function request($url, $method, $data = null, $options = array(), $headers = array())

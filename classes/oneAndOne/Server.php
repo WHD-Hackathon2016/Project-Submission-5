@@ -82,6 +82,11 @@ class Server extends Element
 		return false;
     }
 
+	public function deleteServer()
+	{
+		throw new Exception('Deletion not implemented yet');
+	}
+
     public function checkThresholds($thresholds)
     {
         $cpuWarning = $thresholds->cpu->warning->value;
