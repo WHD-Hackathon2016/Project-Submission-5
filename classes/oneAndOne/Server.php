@@ -17,39 +17,39 @@ class Server extends Element
 		$monitoringId = $this->data->monitoring_policy->id;
         $monitoring = MonitoringPolicy::get($monitoringId);
 
-        $this->checkThresholds($monitoring->thresholds);
-
-        // todo: we have to check if we must to clone the server
-        $newServer = $this->cloneServer();
+        if ($this->checkThresholds($monitoring->thresholds)) {
 
 
-        // wait until the server has an ip
-        $count = 0;
-        $ip = null;
+            // todo: we have to check if we must to clone the server
+            $newServer = $this->cloneServer();
 
-		echo 'Waiting for the correct IP';
 
-        do
-		{
-            $server = Server::get($newServer->id);
+            // wait until the server has an ip
+            $count = 0;
+            $ip = null;
 
-            if(isset($server->ips[0]->id))
-            {
-                $ip = $server->ips[0]->id;
-            }
-			else
-			{
-				echo '.';
-			}
+            echo 'Waiting for the correct IP';
 
-            ++$count;
+            do {
+                $server = Server::get($newServer->id);
 
-            sleep(5);
-        } while (is_null($ip) && $count < 20);
+                if (isset($server->ips[0]->id)) {
+                    $ip = $server->ips[0]->id;
+                } else {
+                    echo '.';
+                }
 
-		echo "\n";
+                ++$count;
 
-        return $ip;
+                sleep(5);
+            } while (is_null($ip) && $count < 20);
+
+            echo "\n";
+
+            return $ip;
+        }
+
+        return false;
     }
 
     /**
@@ -59,9 +59,6 @@ class Server extends Element
  */
     public function cloneServer()
     {
-
-        throw new \Exception("Can't clone the server in actual state");
-        exit;
         //we check if serveris in correct status
         if($this->data->status->state === 'POWERED_ON' || $this->data->status->state === 'POWERED_OFF'){
             $url = \AppConfig::getData('API')['url'].static::$segment."/".$this->data->id."/clone";
@@ -86,13 +83,39 @@ class Server extends Element
         $diskWarning = $thresholds->disk->warning->value;
         $diskCritical = $thresholds->disk->critical->value;
 
-        print_r(array(
+        /*print_r(array(
             $cpuWarning,
             $cpuCritical,
             $ramWarning,
             $ramCritical,
             $diskWarning,
             $diskCritical,
-        ));
+        ));*/
+
+        $monitoringCenter = MonitoringCenter::get($this->data->id);
+
+        //at the moment we only check critical ram and cpu
+        $resources = array(
+            'ram' => $ramCritical,
+            'cpu' => $cpuCritical);
+
+        $result = false;
+
+        foreach ($resources as $resource => $limit)
+        {
+            echo "Checking ".$resource." of " . $this->data->name . "\n";
+            $result = $monitoringCenter->checkReach($limit, $resource);
+
+            if ($result)
+            {
+                break;
+            }
+        }
+        if(!$result)
+        {
+            "Everything is OK!!\n\n";
+        }
+        return $result;
+
     }
 }
