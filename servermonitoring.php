@@ -19,6 +19,9 @@ try {
 		throw new Exception('No load balancer given');
 	}
 
+	echo "Power up the system\n";
+	echo "This may take some seconds...\n";
+
 	$parameters = $argv;
 
 	// Remove the file path
@@ -39,8 +42,6 @@ try {
 	if (!isset($params['loader']))
 	{
 		throw new Exception('No load balancer given');
-
-		return;
 	}
 
 	$loadbalancer = \oneAndOne\LoadBalancer::get($params['loader']);
@@ -52,7 +53,7 @@ try {
 
 	$loadbalancer->checkLoad();
 
-	echo '[DONE]';
+	echo 'Closing...';
 
 } catch (Exception $ex) {
 	echo 'A wild error appears: ' . $ex->getMessage();

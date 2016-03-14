@@ -28,6 +28,8 @@ class Curl extends \transporter\Transporter
 
 	public function request($url, $method, $data = null, $options = array(), $headers = array())
 	{
+		echo "Calling: $url\n";
+
 		$ch = curl_init();
 
 		$options[CURLOPT_CUSTOMREQUEST] = strtoupper($method);
@@ -71,7 +73,7 @@ class Curl extends \transporter\Transporter
 		$options[CURLOPT_HTTPHEADER] = $finishedHeaders;
 		$options[CURLOPT_RETURNTRANSFER] = true;
 
-		if (false && $this->certificate)
+		if ($this->certificate)
 		{
 			$options[CURLOPT_CAINFO] = $this->certificate;
 		}
