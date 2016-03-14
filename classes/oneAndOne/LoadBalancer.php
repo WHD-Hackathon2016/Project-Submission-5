@@ -14,6 +14,23 @@ class LoadBalancer extends Element
 
 	public function checkLoad()
 	{
+		$hour = date('H');
+
+		if ($hour < 12)
+		{
+			echo "Good Morning,\n";
+		}
+		elseif ($hour < 18)
+		{
+			echo "Good Afternoon,\n";
+		}
+		else
+		{
+			echo "Good Evening,\n";
+		}
+
+		echo "Let's search for existing servers...\n";
+
 		if (isset($this->data->server_ips) && is_array($this->data->server_ips))
 		{
 			// Loop all servers in the balancer
@@ -24,6 +41,9 @@ class LoadBalancer extends Element
                 $serverId = $serverIp->assigned_to->id;
 				$serverclass = \oneAndOne\Server::get($serverId);
 
+				echo "I found the following server: " . $serverclass->name . "\n";
+				echo "Let's optimize it!\n";
+
 				// Check if we have to optimize the server
 				$newserverId = $serverclass->optimize();
 
@@ -33,6 +53,10 @@ class LoadBalancer extends Element
 					$this->addServer($newserverId);
 				}
 			}
+		}
+		else
+		{
+			echo "No servers found, we're finished";
 		}
 	}
 
