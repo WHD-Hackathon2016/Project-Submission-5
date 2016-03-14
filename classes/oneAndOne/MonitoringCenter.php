@@ -15,7 +15,7 @@ class MonitoringCenter extends Element
 {
     static $segment = "/monitoring_center";
     const PERIOD = 'LAST_HOUR';
-    const CRITICAL_INTERVAL = 4; // 4 times of 5 minutes = 20 minutes
+    const CRITICAL_INTERVAL = 1; // 4 times of 5 minutes = 20 minutes
 
     /**
      * @param null $id

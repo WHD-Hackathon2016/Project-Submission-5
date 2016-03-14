@@ -100,7 +100,7 @@ class LoadBalancer extends Element
 				echo "Try to delete server: $serverclass->name\n";
 
 				// Grab the last server from the foreach
-				$server = $server->deleteServer();
+				$server = $serverclass->deleteServer();
 
 				if (!empty($server->status->state) && $server->status->state == 'REMOVING')
 				{
