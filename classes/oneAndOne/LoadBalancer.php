@@ -84,9 +84,9 @@ class LoadBalancer extends Element
 				}
 			}
 
-			if ($canDelete && count($this->data->server_ips) > 1 && !empty($server->id))
+			if ($canDelete && count($this->data->server_ips) > 1 && !empty($serverclass->id))
 			{
-				echo "Try to delete server: $server->name\n";
+				echo "Try to delete server: $serverclass->name\n";
 
 				// Grab the last server from the foreach
 				$server = $server->deleteServer();
