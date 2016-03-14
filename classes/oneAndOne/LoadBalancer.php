@@ -55,6 +55,8 @@ class LoadBalancer extends Element
 					echo "Try to add the new server to the current load balancer\n";
 
 					$this->addServer($newserverId);
+
+					echo "Server added. continue\n";
 				}
 				else
 				{

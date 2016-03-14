@@ -23,7 +23,6 @@ class Server extends Element
             // todo: we have to check if we must to clone the server
             $newServer = $this->cloneServer();
 
-
             // wait until the server has an ip
             $count = 0;
             $ip = null;
@@ -59,6 +58,8 @@ class Server extends Element
  */
     public function cloneServer()
     {
+		echo "Cloning the server \"{$this->data->name}\"\n";
+
         //we check if serveris in correct status
         if($this->data->status->state === 'POWERED_ON' || $this->data->status->state === 'POWERED_OFF'){
             $url = \AppConfig::getData('API')['url'].static::$segment."/".$this->data->id."/clone";
@@ -69,8 +70,11 @@ class Server extends Element
 
 			return $this->createObject($result);
         }
+		else
+		{
+			echo "Can't clone the server in actual state\n";
+		}
 
-        throw new \Exception("Can't clone the server in actual state");
 
     }
 
