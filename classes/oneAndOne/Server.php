@@ -56,7 +56,6 @@ class Server extends Element
  */
     public function cloneServer()
     {
-        print $this->data->status->state."\n";
         //we check if serveris in correct status
         if($this->data->status->state === 'POWERED_ON' || $this->data->status->state === 'POWERED_OFF'){
             $url = \AppConfig::getData('API')['url'].static::$segment."/".$this->data->id."/clone";
