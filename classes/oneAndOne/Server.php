@@ -66,7 +66,7 @@ class Server extends Element
 
         //we check if serveris in correct status
         if($this->data->status->state === 'POWERED_ON' || $this->data->status->state === 'POWERED_OFF'){
-            $url = \AppConfig::getData('API')['url'].static::$segment."/".$this->data->id."/clone";
+            $url = \AppConfig::getData('API')['url'] . static::$segment . "/" . $this->data->id . "/clone";
             $postParams = "{\"name\": \"Server Cloned at ".date('Y-m-d H:i:s')."\"}";
             $curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
 
@@ -84,7 +84,12 @@ class Server extends Element
 
 	public function deleteServer()
 	{
-		throw new Exception('Deletion not implemented yet');
+		$url = \AppConfig::getData('API')['url'] . static::$segment . "/" . $this->data->id;
+
+		$curl = new \transporter\Curl(\AppConfig::getData('API')['token']);
+		$result = $curl->delete($url);
+
+		return $this->createObject($result);
 	}
 
     public function checkThresholds($thresholds)

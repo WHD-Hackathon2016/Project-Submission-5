@@ -62,6 +62,7 @@ class LoadBalancer extends Element
 
 					echo "Server added\n";
 
+					// Don't delete if we're cloning
 					$canDelete = false;
 					$isCloned = true;
 
@@ -77,8 +78,15 @@ class LoadBalancer extends Element
 
 			if ($canDelete && count($this->data->server_ips) > 1 && !empty($server->id))
 			{
+				echo "Try to delete server: $server->name\n";
+
 				// Grab the last server from the foreach
-				$server->delete();
+				$server = $server->deleteServer();
+
+				if (!empty($server->status->state) && $server->status->state == 'REMOVING')
+				{
+					echo "Server deleted\n";
+				}
 			}
 		}
 		else
