@@ -23,16 +23,28 @@ class Server extends Element
         // wait until the server has an ip
         $count = 0;
         $ip = null;
-        do{
-            //$result = parent::get($newServer->id)->content;
+
+		echo 'Waiting for the correct IP';
+
+        do
+		{
             $server = Server::get($newServer->id);
+
             if(isset($server->ips[0]->id))
             {
                 $ip = $server->ips[0]->id;
             }
+			else
+			{
+				echo '.';
+			}
+
             ++$count;
+
             sleep(5);
-        }while (is_null($ip) && $count < 20);
+        } while (is_null($ip) && $count < 20);
+
+		echo "\n";
 
         return $ip;
     }

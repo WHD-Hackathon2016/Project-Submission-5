@@ -81,14 +81,15 @@ class Curl extends \transporter\Transporter
 		}
 
 		curl_setopt_array($ch, $options);
-echo 'Called: ' . $url . "\n";
+
 		$content = curl_exec($ch);
+		$errorno = curl_errno($ch);
 
-		if ($content == false)
+		if ($content == false || $errorno > 0)
 		{
-			$errors = curl_error($ch);
+			$error = curl_error($ch);
 
-			print_r($errors);
+			throw new Exception($error, $errorno);
 		}
 
 		return new \response\JSON($content);
