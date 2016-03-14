@@ -1,11 +1,13 @@
 <?php
-
 /**
- * Created by PhpStorm.
- * User: Administrador
- * Date: 13/03/2016
- * Time: 11:32
+ * @package    1&1 Server monitoring
+ *
+ * @author     Francisco Aramayo Martinez <faramayo@arsys.es>
+ * @author     Benjamin Trenkle <benjamin.trenkle@wicked-software.de>
+ *
+ * @license    GNU General Public License version 3 or later; see LICENSE
  */
+
 class AppConfig
 {
     private static $data;

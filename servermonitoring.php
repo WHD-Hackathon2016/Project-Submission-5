@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package    1&1 Server monitoring
+ *
+ * @author     Francisco Aramayo Martinez <faramayo@arsys.es>
+ * @author     Benjamin Trenkle <benjamin.trenkle@wicked-software.de>
+ * 
+ * @license    GNU General Public License version 3 or later; see LICENSE
+ */
 
 // Make sure we're being called from the command line, not a web interface
 if (array_key_exists('REQUEST_METHOD', $_SERVER)) die;

@@ -1,9 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrador
- * Date: 13/03/2016
- * Time: 14:22
+ * @package    1&1 Server monitoring
+ *
+ * @author     Francisco Aramayo Martinez <faramayo@arsys.es>
+ * @author     Benjamin Trenkle <benjamin.trenkle@wicked-software.de>
+ *
+ * @license    GNU General Public License version 3 or later; see LICENSE
  */
 
 namespace oneAndOne;

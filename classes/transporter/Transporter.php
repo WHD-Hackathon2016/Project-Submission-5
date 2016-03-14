@@ -1,8 +1,11 @@
 <?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @package    1&1 Server monitoring
+ *
+ * @author     Francisco Aramayo Martinez <faramayo@arsys.es>
+ * @author     Benjamin Trenkle <benjamin.trenkle@wicked-software.de>
+ *
+ * @license    GNU General Public License version 3 or later; see LICENSE
  */
 
 namespace transporter;
